@@ -3,9 +3,10 @@ import os
 from aiogram import Dispatcher, Bot, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from data.database import Database
+from secret import token
 
 loop = asyncio.get_event_loop()
-TOKEN = ""
+TOKEN = token
 TOKEN_PAYMENTS = ""
 DELIVERY_CHAT = ""
 SUPPORT_CHAT = ""
