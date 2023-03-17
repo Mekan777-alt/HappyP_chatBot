@@ -1,7 +1,7 @@
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
-class FSMreserved(StatesGroup):
+class ReservedState(StatesGroup):
     name = State()
     time = State()
     date = State()
@@ -9,3 +9,7 @@ class FSMreserved(StatesGroup):
     phone_number = State()
 
 
+class SosState(StatesGroup):
+    question = State()
+    phone_number = State()
+    submit = State()
