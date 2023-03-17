@@ -8,7 +8,7 @@ def people():
     for i in range(1, 11):
         i = str(i)
         markup.add(i)
-    return
+    return markup
 
 
 def date_day():

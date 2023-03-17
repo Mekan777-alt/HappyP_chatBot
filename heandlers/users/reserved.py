@@ -22,7 +22,7 @@ async def set_name(message: types.Message, state: FSMContext):
             await message.answer('📅 На какую дату?', reply_markup=date_day())
         else:
             await state.finish()
-            await message.answer("ПЕРЕХОД НА ГЛАВНОЕ МЕНЮ", reply_markup=main())
+            await message.answer("Переход на главное меню", reply_markup=main())
 
 
 @dp.message_handler(state=FSMreserved.date)
