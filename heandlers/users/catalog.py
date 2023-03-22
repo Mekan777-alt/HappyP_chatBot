@@ -1,6 +1,7 @@
 from config import dp
 from aiogram import types
 from buttons.users.menu import menu
+from buttons.users.main import main
 
 
 @dp.message_handler(text='📖 Меню')
@@ -34,3 +35,8 @@ async def catalog_bar(message: types.Message):
     await message.answer('С баром можете ознакомиться с ссылкой ниже\n'
                          'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10085743'
                          )
+
+
+@dp.message_handler(text='👈 Назад')
+async def back(message: types.Message):
+    await message.answer('Переход на главное меню', reply_markup=main())

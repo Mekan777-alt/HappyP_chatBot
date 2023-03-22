@@ -16,4 +16,5 @@ def menu_markup():
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add('📖 МЕНЮ')
     markup.add("⚙️ Инструкция", "💳 Способ оплаты")
+    markup.add('👈 Назад')
     return markup

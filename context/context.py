@@ -13,3 +13,8 @@ class SosState(StatesGroup):
     question = State()
     phone_number = State()
     submit = State()
+
+
+class Admin(StatesGroup):
+    login = State()
+    password = State()
