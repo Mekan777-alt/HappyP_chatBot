@@ -2,6 +2,7 @@ from config import dp
 from secret import login, password
 from aiogram import types
 from context.context import Admin
+from buttons.admin.admin import admin
 
 
 @dp.message_handler(commands='admin')
@@ -15,6 +16,12 @@ async def set_password(message: types.Message):
     if message.text in login:
         await Admin.next()
         await message.answer('Пароль: ')
+
+
+@dp.message_handler(text=password, state=Admin.password)
+async def set_password(message: types.Message):
+    if message.text in password:
+        await message.answer('Включен режим администратора', reply_markup=admin())
 
 
 @dp.message_handler(lambda message: message.text is not login)
