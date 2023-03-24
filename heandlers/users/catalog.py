@@ -32,7 +32,8 @@ async def main_menu(message: types.Message):
 
 @dp.message_handler(text='🍾 Бар')
 async def catalog_bar(message: types.Message):
-    await message.answer('С баром можете ознакомиться с ссылкой ниже\n'
+    await message.answer('С Баром можете ознакомиться по ссылке ниже\n'
+                         '\n'
                          'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10085743'
                          )
 

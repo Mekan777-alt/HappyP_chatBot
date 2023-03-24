@@ -12,5 +12,5 @@ async def time_work(message: types.Message):
                          "\n"
                          "Адрес: Мусина 1\n"
                          "\n"
-                         "☎️ Тел:  +7 (843) 266-11-11\n")
+                         "☎️ Тел:  +7 (843) 225-06-06\n")
     await bot.send_location(message.from_user.id, latitude=55.81693801144643, longitude=49.11948637935675)

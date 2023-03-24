@@ -1,4 +1,4 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from config import db
 from aiogram.utils.callback_data import CallbackData
 
@@ -11,4 +11,18 @@ def catalog():
         markup.add(InlineKeyboardButton(title, category_cb.new(id=idx, action='view')))
 
     markup.add(InlineKeyboardButton('+ Добавить категорию', callback_data='add_category'))
+    return markup
+
+
+def back_markup():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.add('👈 Назад')
+
+    return markup
+
+
+def check_markup():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.row('👈 Назад', '✅ Все верно')
+
     return markup

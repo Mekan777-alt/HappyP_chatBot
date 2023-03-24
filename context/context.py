@@ -18,3 +18,15 @@ class SosState(StatesGroup):
 class Admin(StatesGroup):
     login = State()
     password = State()
+
+
+class ProductState(StatesGroup):
+    title = State()
+    body = State()
+    image = State()
+    price = State()
+    confirm = State()
+
+
+class CategoryState(StatesGroup):
+    title = State()
