@@ -1,20 +1,33 @@
+from datetime import datetime
 from aiogram.types import ChatActions
-
-from buttons.users.dylevery import product_markup
+from buttons.users.dylevery import product_markup, categories_markup
 from config import dp, db, bot
 from aiogram import types
-from buttons.users.inline.dylevery import category_markup, menu_markup, category_cb
+
+
+def time_dlv():
+    current_time = str(datetime.now().time())
+    return current_time
 
 
 @dp.message_handler(text='🎒 Доставка')
 async def cmd_dyl(message: types.Message):
-    await message.answer("Минимальная сумма заказа 2000 рублей", reply_markup=menu_markup())
-    await message.answer("Выберите раздел", reply_markup=category_markup())
+    if time_dlv()[0] == '2' and time_dlv()[1] == '3' \
+            or time_dlv()[0] == '0' \
+            or time_dlv()[0] == '1' and time_dlv()[1] == '0':
+        await message.answer("Доставка принимается с 11:00 до 23:00")
+    else:
+        is_allowed = db.fetchall('SELECT * FROM regime')
+        if is_allowed[0][1] == 1:
+            await message.answer("Минимальная сумма заказа 1000 рублей", reply_markup=menu_markup())
+            await message.answer("ВЫБЕРИТЕ РАЗДЕЛ", reply_markup=categories_markup())
+        else:
+            await message.answer("Приносим извинения, на данный момент доставка не доступна")
 
 
 @dp.message_handler(text='📖 МЕНЮ')
 async def menu_dyl(message: types.Message):
-    await message.answer("Выберите раздел", reply_markup=category_markup())
+    await message.answer("Выберите раздел", reply_markup=categories_markup())
 
 
 @dp.message_handler(text="⚙️ Инструкция")
