@@ -1,6 +1,6 @@
 from datetime import datetime
 from aiogram.types import ChatActions
-from buttons.users.dylevery import product_markup, categories_markup
+from buttons.users.dylevery import product_markup, categories_markup, menu_markup, category_cb
 from config import dp, db, bot
 from aiogram import types
 
@@ -66,3 +66,5 @@ async def menu_dyl(call: types.CallbackQuery, callback_data: dict):
                            (callback_data['id'],))
     status = db.fetchall("SELECT * FROM status")
     await show_products(call.message, products, status)
+
+
