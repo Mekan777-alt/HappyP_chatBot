@@ -5,4 +5,4 @@ __pycache__
 .DS_Store
 *.pyc
 *.log
-/data/database.db
+data/database.db

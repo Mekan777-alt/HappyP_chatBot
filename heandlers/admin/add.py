@@ -65,6 +65,7 @@ def submit_markup():
 
     return markup
 
+
 """remove"""
 
 category_cb = CallbackData('category', 'id', 'action')
@@ -148,11 +149,9 @@ async def start_menu(call: types.CallbackQuery, callback_data: dict):
 
 @dp.message_handler(text=settings_catalogue)
 async def process_catalogue(message: types.Message):
-
     markup = InlineKeyboardMarkup()
 
     for idx, title in db.fetchall('SELECT * FROM categories'):
-
         markup.add(InlineKeyboardButton(
             title, callback_data=category_cb.new(id=idx, action='view')))
 
@@ -206,7 +205,6 @@ async def regime_callback_handler(query: CallbackQuery):
 
 @dp.callback_query_handler(category_cb.filter(action='view'))
 async def category_callback_handler(query: CallbackQuery, callback_data: dict, state: FSMContext):
-
     category_idx = callback_data['id']
 
     products = db.fetchall('''SELECT * FROM products product
@@ -231,7 +229,6 @@ async def add_category_callback_handler(query: CallbackQuery):
 
 @dp.message_handler(state=CategoryState.title)
 async def set_category_title_handler(message: types.Message, state: FSMContext):
-
     category = message.text
     idx = md5(category.encode('utf-8')).hexdigest()
     db.query('INSERT INTO categories VALUES (?, ?)', (idx, category))
@@ -242,11 +239,8 @@ async def set_category_title_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(text=delete_category)
 async def delete_category_handler(message: types.Message, state: FSMContext):
-
     async with state.proxy() as data:
-
         if 'category_index' in data.keys():
-
             idx = data['category_index']
 
             db.query(
@@ -256,8 +250,8 @@ async def delete_category_handler(message: types.Message, state: FSMContext):
             await message.answer('Готово!', reply_markup=ReplyKeyboardRemove())
             await process_catalogue(message)
 
-"""add product"""
 
+"""add product"""
 
 
 @dp.message_handler(text=add_product)
@@ -271,7 +265,6 @@ async def product_state_process(message: types.Message):
 
 @dp.message_handler(text=cancel_message, state=ProductState.title)
 async def process_cancel(message: types.Message, state: FSMContext):
-
     await message.answer('Ок, отменено!', reply_markup=ReplyKeyboardRemove())
     await state.finish()
 
@@ -384,7 +377,6 @@ async def process_confirm_back(message: types.Message, state: FSMContext):
 @dp.message_handler(text=all_right_message, state=ProductState.confirm)
 async def process_confirm(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-
         title = data['title']
         body = data['body']
         image = data['image']
@@ -398,7 +390,7 @@ async def process_confirm(message: types.Message, state: FSMContext):
         db.query('INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)',
                  (idx, title, body, image, int(price), tag))
         db.query('INSERT INTO status VALUES (?, ?)',
-                (idx, 'start'))
+                 (idx, 'start'))
 
     await state.finish()
     await message.answer('Готово!', reply_markup=ReplyKeyboardRemove())
@@ -407,7 +399,6 @@ async def process_confirm(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(product_cb.filter(action='delete'))
 async def delete_product_callback_handler(query: CallbackQuery, callback_data: dict):
-
     product_idx = callback_data['id']
     db.query('DELETE FROM products WHERE idx=?', (product_idx,))
     await query.answer('Удалено!')
@@ -415,7 +406,6 @@ async def delete_product_callback_handler(query: CallbackQuery, callback_data: d
 
 
 async def show_products(m, products, category_idx):
-
     await bot.send_chat_action(m.chat.id, ChatActions.TYPING)
 
     for idx, title, body, image, price, tag in products:
