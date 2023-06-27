@@ -17,6 +17,7 @@ async def cmd_dyl(message: types.Message):
             or time_dlv()[0] == '1' and time_dlv()[1] == '0':
         await message.answer("Доставка принимается с 11:00 до 23:00")
     else:
+        db.query("INSERT INTO regime VALUES (?, ?)", (0, 1))
         is_allowed = db.fetchall('SELECT * FROM regime')
         if is_allowed[0][1] == 1:
             await message.answer("Минимальная сумма заказа 1000 рублей", reply_markup=menu_markup())
