@@ -5,6 +5,7 @@ from aiogram import types
 @dp.message_handler(text='🕗 Режим работы')
 async def time_work(message: types.Message):
     await message.answer("Happy People\n"
+                         "Cafe Food & Drink\n"
                          "\n"
                          "Режим работы:\n"
                          "ВС-ЧТ\n"
