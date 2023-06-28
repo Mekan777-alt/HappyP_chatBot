@@ -1,8 +1,6 @@
 from datetime import datetime
-from aiogram.types import ChatActions, InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.utils.callback_data import CallbackData
-
-from buttons.users.dylevery import categories_markup, menu_markup, category_cb
+from aiogram.types import ChatActions
+from buttons.users.dylevery import product_markup, categories_markup, menu_markup, category_cb, product_cb
 from config import dp, db, bot
 from aiogram import types
 
@@ -10,16 +8,6 @@ from aiogram import types
 def time_dlv():
     current_time = str(datetime.now().time())
     return current_time
-
-
-product_cb = CallbackData('product', 'id', 'action')
-
-
-def product_markup(idx='', price=0):
-    markup = InlineKeyboardMarkup()
-    markup.add(
-        InlineKeyboardButton(f'Заказать за - {price}₽', callback_data=product_cb.new(id=idx, action='add')))
-    return markup
 
 
 @dp.message_handler(text='🎒 Доставка')
@@ -65,7 +53,7 @@ async def menu_dyl(call: types.CallbackQuery, callback_data: dict):
 @dp.callback_query_handler(product_cb.filter(action='add'))
 async def add_product_callback_handler(query: types.CallbackQuery, callback_data: dict):
     product_id = callback_data['id']
-    db.query('INSERT INTO cart VALUES (?, ?, 1, null, null, null, null, null)',
+    db.query('INSERT INTO cart VALUES (?, ?, 1, null, null, null, null, null, null)',
             (query.message.chat.id, product_id))
     await query.answer('Товар добавлен в корзину!')
     await query.message.delete()
