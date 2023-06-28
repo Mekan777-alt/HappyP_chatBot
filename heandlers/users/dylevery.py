@@ -1,6 +1,7 @@
 from datetime import datetime
+from aiogram.dispatcher import FSMContext
 from aiogram.types import ChatActions
-from buttons.users.dylevery import product_markup, categories_markup, menu_markup, category_cb
+from buttons.users.dylevery import product_markup, categories_markup, menu_markup, category_cb, product_cb
 from config import dp, db, bot
 from aiogram import types
 
@@ -41,6 +42,24 @@ async def pay(message: types.Message):
     pass
 
 
+@dp.callback_query_handler(category_cb.filter(action='view_2'))
+async def menu_dyl(call: types.CallbackQuery, callback_data: dict):
+    products = db.fetchall('''SELECT * FROM products
+        WHERE products.tag = (SELECT title FROM categories WHERE idx=?)''',
+                           (callback_data['id'],))
+    status = db.fetchall("SELECT * FROM status")
+    await show_products(call.message, products, status)
+
+
+@dp.callback_query_handler(product_cb.filter(action='add'))
+async def add_product_callback_handler(query: types.CallbackQuery, callback_data: dict, state: FSMContext):
+    product_id = callback_data['id']
+    db.query('INSERT INTO cart VALUES (?, ?, 1, null, null, null, null, null)',
+            (query.message.chat.id, product_id))
+    await query.answer('Товар добавлен в корзину!')
+    await query.message.delete()
+
+
 async def show_products(m, products, status):
     if len(products) == 0:
         await m.answer('Здесь ничего нет 😢')
@@ -58,14 +77,5 @@ async def show_products(m, products, status):
                                              reply_markup=markup)
                     else:
                         await m.answer(text=text, reply_markup=markup)
-
-
-@dp.callback_query_handler(category_cb.filter(action='view_2'))
-async def menu_dyl(call: types.CallbackQuery, callback_data: dict):
-    products = db.fetchall('''SELECT * FROM products
-        WHERE products.tag = (SELECT title FROM categories WHERE idx=?)''',
-                           (callback_data['id'],))
-    status = db.fetchall("SELECT * FROM status")
-    await show_products(call.message, products, status)
 
 
