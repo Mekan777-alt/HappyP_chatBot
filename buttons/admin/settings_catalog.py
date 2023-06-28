@@ -26,3 +26,11 @@ def check_markup():
     markup.row('👈 Назад', '✅ Все верно')
 
     return markup
+
+
+def confirm_markup():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.add('✅ Подтвердить заказ')
+    markup.add('👈 Назад')
+
+    return markup
