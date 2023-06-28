@@ -87,7 +87,7 @@ async def process_cart(message: types.Message, state: FSMContext):
                 data['products'] = {}
             order_cost = 0
 
-            for _, idx, count_in_cart, projarka, garnish, sauce, amount, spice in cart_data:
+            for _, idx, count_in_cart, comment, projarka, garnish, sauce, amount, spice in cart_data:
                 product = db.fetchone('SELECT * FROM products WHERE idx=?', (idx,))
                 if product is None:
                     db.query('DELETE FROM cart WHERE idx=?', (idx,))
