@@ -7,7 +7,7 @@ from data.database import Database
 loop = asyncio.get_event_loop()
 TOKEN = '6261279510:AAGW27LozQLygnhr2yzKrOXturXyr-r4Rcc'
 TOKEN_PAYMENTS = "test_XBzEk_bjy4PkSe17lDz-Z3jdfT7S89q31pzPhhx27Rw"
-DELIVERY_CHAT = ""
+DELIVERY_CHAT = "-1001973443055"
 SUPPORT_CHAT = ""
 BRON_CHANNEL = ""
 
