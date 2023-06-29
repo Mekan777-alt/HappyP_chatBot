@@ -1,9 +1,12 @@
 from config import dp
-from secret import login, password
 from aiogram import types
 from context.context import Admin
 from buttons.admin.admin import admin
 from aiogram.dispatcher import FSMContext
+
+
+login = 'Happy'
+password = '12345'
 
 
 @dp.message_handler(commands='admin', state=None)
