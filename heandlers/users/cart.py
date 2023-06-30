@@ -449,7 +449,7 @@ async def process_confirm(message: Message, state: FSMContext):
         Configuration.secret_key = 'test_XBzEk_bjy4PkSe17lDz-Z3jdfT7S89q31pzPhhx27Rw'
         payment = Payment.create({
             "amount": {
-                "value": PRICE,
+                "value": total_price,
                 "currency": "RUB"
             },
             "payment_method_data": {
