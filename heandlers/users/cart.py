@@ -37,7 +37,7 @@ def payment(value, description):
     })
 
     web = json.loads(payment.json())
-    site = web['confirmation'][0]
+    site = web['confirmation']['confirmation_url']
 
     return site
 
