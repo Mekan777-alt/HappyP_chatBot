@@ -451,14 +451,13 @@ async def process_confirm(message: Message, state: FSMContext):
         total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
         idempotence_key = str(uuid.uuid4())
-        refund = Refund.create({
+        Refund.create({
             "amount": {
                 "value": total_price,
                 "currency": "RUB"
             },
             "payment_id": "215d8da0-000f-50be-b000-0003308c89be"
         }, idempotence_key)
-        print(refund)
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
