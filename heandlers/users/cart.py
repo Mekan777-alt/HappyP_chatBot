@@ -36,7 +36,10 @@ def payment(value, description):
         "description": description
     })
 
-    return json.loads(payment.json())
+    web = json.loads(payment.json())
+    site = web['confirmation'][0]
+
+    return site
 
 
 async def check_payment(payment_id):
@@ -487,8 +490,8 @@ async def process_confirm(message: Message, state: FSMContext):
             total_price += tp
         total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
-        a = payment(price, '...')
-        print(a)
+        a = payment(total_price, '...')
+        await check_payment()
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
