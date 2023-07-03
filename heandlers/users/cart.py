@@ -491,7 +491,7 @@ async def process_confirm(message: Message, state: FSMContext):
         total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
         a = payment(total_price, '...')
-        await message.answer(f"Ссылка на оплату:/n"
+        await message.answer(f"Ссылка на оплату:\n"
                              f"{a}")
         # await check_payment()
         cid = message.chat.id
