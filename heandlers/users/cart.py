@@ -490,8 +490,8 @@ async def process_confirm(message: Message, state: FSMContext):
             total_price += tp
         total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
-        a = payment(total_price, '...')
-        await check_payment()
+        payment(total_price, '...')
+        # await check_payment()
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
