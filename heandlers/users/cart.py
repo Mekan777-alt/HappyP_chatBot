@@ -488,7 +488,6 @@ async def process_confirm(message: Message, state: FSMContext):
         for title, price, count_in_cart, info in data['products'].values():
             tp = count_in_cart * price
             total_price += tp
-        total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
         a = payment(total_price, '...')
         await message.answer(f"Ссылка на оплату:\n"
