@@ -1,3 +1,4 @@
+import asyncio
 import uuid
 from datetime import datetime
 from aiogram import types
@@ -14,9 +15,45 @@ from heandlers.users.dylevery import cmd_dyl
 from yookassa import Configuration, Payment, Refund
 import json
 
-
 b54 = KeyboardButton("📞 Отправить свой номер", request_contact=True)
 send_phone = ReplyKeyboardMarkup(resize_keyboard=True).add(b54)
+
+
+def payment(value, description):
+    payment = Payment.create({
+        "amount": {
+            "value": value,
+            "currency": "RUB"
+        },
+        "payment_method_data": {
+            "type": "bank_card"
+        },
+        "confirmation": {
+            "type": "redirect",
+            "return_url": "урл редиректа"
+        },
+        "capture": True,
+        "description": description
+    })
+
+    return json.loads(payment.json())
+
+
+async def check_payment(payment_id):
+    payment = json.loads((Payment.find_one(payment_id)).json())
+    while payment['status'] == 'pending':
+        payment = json.loads((Payment.find_one(payment_id)).json())
+        await asyncio.sleep(3)
+
+    if payment['status'] == 'succeeded':
+        print("SUCCSESS RETURN")
+        print(payment)
+        return True
+    else:
+        print("BAD RETURN")
+        print(payment)
+        return False
+
 
 dostavka = "🎒 Доставка"
 samovyvoz = "🚗 Самовывоз"
@@ -450,14 +487,8 @@ async def process_confirm(message: Message, state: FSMContext):
             total_price += tp
         total_price *= 100
         PRICE = types.LabeledPrice(label=MESSAGE['price'], amount=total_price)
-        idempotence_key = str(uuid.uuid4())
-        Refund.create({
-            "amount": {
-                "value": total_price,
-                "currency": "RUB"
-            },
-            "payment_id": "215d8da0-000f-50be-b000-0003308c89be"
-        }, idempotence_key)
+        a = payment(price, '...')
+        print(a)
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
