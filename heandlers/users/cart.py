@@ -46,17 +46,59 @@ def payment(value, description):
     return a
 
 
-async def check_payment(payment_id):
+async def check_payment(payment_id, message, state):
     payment = json.loads((Payment.find_one(payment_id)).json())
     while payment['status'] == 'pending':
         payment = json.loads((Payment.find_one(payment_id)).json())
         await asyncio.sleep(3)
 
     if payment['status'] == 'succeeded':
-        print("SUCCSESS RETURN")
-        print(payment)
-        return True
+        await bot.send_message(
+            message.chat.id, MESSAGE['successful_payments'], reply_markup=main())
+        async with state.proxy() as data:
+            total_price = 0
+            an = ''
+
+            for title, price, count_in_cart, info in data['products'].values():
+                tp = count_in_cart * price
+                an += f'<b>{title}</b> - {count_in_cart}шт = {tp}рублей\n{info}\n\n'
+                total_price += tp
+            now = datetime.now()
+
+            address = ""
+
+            if data['dylevery'] == dostavka:
+                variant = "Доставка"
+                address = f"Адрес доставки: {data['address']}\n"
+            else:
+                variant = "Самовывоз"
+
+            device = ""
+
+            if data['device'] == "Да":
+                device = f"Приборы: Положить\n" \
+                         f"Количество приборов: {data['count']}\n"
+            elif data['device'] == "Нет":
+                device = "Приборы: Нет\n"
+
+            await bot.send_message(DELIVERY_CHAT, f"<b>{variant}</b>\n\n"
+                                                  f"Имя получателя: {data['name']}\n"
+                                                  f"Время: {now.hour}:{now.minute}\n"
+                                                  f"Дата: {now.date().strftime('%d-%m-%y')}\n"
+                                                  f"Способ получения: {data['dylevery']}\n"
+                                                  f"{device}"
+                                                  f"{address}"
+                                                  f"Номер телефона: {data['phone_number']}\n"
+                                                  f"Общая стоимость: {total_price} рублей\n"
+                                                  f"\n"
+                                                  f"Блюдо: \n"
+                                                  f"{an}")
+            db.query("""DELETE FROM cart WHERE cid=?""", (message.chat.id,))
+        await state.finish()
     else:
+        await bot.send_message(
+            message.chat.id, "Оплата не прошлаю. \n"
+                             "Повторите попытку")
         print("BAD RETURN")
         print(payment)
         return False
@@ -495,7 +537,7 @@ async def process_confirm(message: Message, state: FSMContext):
         a = payment(total_price, '...')
         await message.answer(f"Ссылка на оплату:\n"
                              f"{a[1]}")
-        await check_payment(a[0])
+        await check_payment(a[0], message, state)
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
