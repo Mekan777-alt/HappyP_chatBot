@@ -301,8 +301,8 @@ async def process_checkout(message: Message, state: FSMContext):
         for title, price, count_in_cart, info in data['products'].values():
             tp = count_in_cart * price
             total_price += tp
-        if total_price < 2000:
-            await message.answer(f"Закажите ещё на {2000 - total_price} рублей чтобы совершить заказ")
+        if total_price < 1000:
+            await message.answer(f"Закажите ещё на {1000 - total_price} рублей чтобы совершить заказ")
         else:
             await CheckoutState.check_cart.set()
             await checkout(message, state)
