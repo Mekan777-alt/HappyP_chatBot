@@ -494,9 +494,8 @@ async def process_confirm(message: Message, state: FSMContext):
             total_price += tp
         a = payment(total_price, '...')
         await message.answer(f"Ссылка на оплату:\n"
-                             f"{a}")
-        print(a)
-        # await check_payment()
+                             f"{a[1]}")
+        await check_payment(a[0])
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
                     for idx, quantity in db.fetchall('''SELECT idx, quantity FROM cart
