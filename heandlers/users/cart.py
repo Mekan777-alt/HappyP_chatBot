@@ -20,6 +20,7 @@ send_phone = ReplyKeyboardMarkup(resize_keyboard=True).add(b54)
 
 
 def payment(value, description):
+    a = []
     payment = Payment.create({
         "amount": {
             "value": value,
@@ -38,9 +39,11 @@ def payment(value, description):
 
     web = json.loads(payment.json())
     id = web['id']
+    a.append(id)
     site = web['confirmation']['confirmation_url']
+    a.append(site)
 
-    return f"{id} {site}"
+    return a
 
 
 async def check_payment(payment_id):
