@@ -38,7 +38,6 @@ def payment(value, description):
 
     web = json.loads(payment.json())
     id = web['id']
-    print(id)
     site = web['confirmation']['confirmation_url']
 
     return f"{id} {site}"
@@ -493,6 +492,7 @@ async def process_confirm(message: Message, state: FSMContext):
         a = payment(total_price, '...')
         await message.answer(f"Ссылка на оплату:\n"
                              f"{a}")
+        print(a)
         # await check_payment()
         cid = message.chat.id
         products = [idx + '=' + str(quantity)
