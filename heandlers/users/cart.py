@@ -37,10 +37,11 @@ def payment(value, description):
     })
 
     web = json.loads(payment.json())
-    print(web)
+    id = web['id']
+    print(id)
     site = web['confirmation']['confirmation_url']
 
-    return site
+    return f"{id} {site}"
 
 
 async def check_payment(payment_id):
