@@ -7,7 +7,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import Message, ChatActions, ReplyKeyboardMarkup, CallbackQuery, \
     InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ContentType
 from buttons.users.main import main
-from config import dp, db, bot, DELIVERY_CHAT, TOKEN_PAYMENTS
+from config import dp, db, bot, DELIVERY_CHAT
 from buttons.admin.settings_catalog import check_markup, confirm_markup
 # from hendlers.user.dostavka import dyl_start, projarkas, garnishs, sauces
 from aiogram.utils.callback_data import CallbackData
@@ -146,7 +146,7 @@ def product_markup_2(idx, count):
 
 
 def device_():
-    markup = ReplyKeyboardMarkup()
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
     yes = "Да"
     not_ = "Нет"
     markup.add(yes, not_)
