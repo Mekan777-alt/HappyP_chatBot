@@ -40,7 +40,7 @@ async def payment(value, description, state):
                 "items": [{
                     "description": products,
                     "amount": {
-                        "value": value,
+                        "value": price,
                         "currency": "RUB"
                     },
                     "vat_code": 1,
