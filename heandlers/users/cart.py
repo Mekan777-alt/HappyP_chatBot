@@ -19,29 +19,53 @@ b54 = KeyboardButton("📞 Отправить свой номер", request_cont
 send_phone = ReplyKeyboardMarkup(resize_keyboard=True).add(b54)
 
 
-def payment(value, description):
+async def payment(value, description, state):
     a = []
-    payment = Payment.create({
-        "amount": {
-            "value": value,
-            "currency": "RUB"
-        },
-        "payment_method_data": {
-            "type": "bank_card"
-        },
-        "confirmation": {
-            "type": "redirect",
-            "return_url": "урл редиректа"
-        },
-        "capture": True,
-        "description": description
-    })
+    async with state.proxy() as data:
+        products = ''
+        count = ''
+        for title, price, count_in_cart, info in data['products'].values():
+            products += f'{title}'
+            count += f'{count_in_cart}'
+        payment = Payment.create({
+            "amount": {
+                "value": value,
+                "currency": "RUB"
+            },
+            "receipt": {
+                "customer": {
+                    "full_name": f"{data['name']}",
+                    "phone": f"{data['phone_number']}",
+                },
+                "items": [{
+                    "description": products,
+                    "amount": {
+                        "value": value,
+                        "currency": "RUB"
+                    },
+                    "vat_code": 1,
+                    "quantity": count,
+                    "payment_subject": "service",
+                    "payment_mode": "full_prepayment",
+                }],
+                "tax_system_code": 3,
+            },
+            "payment_method_data": {
+                "type": "bank_card"
+            },
+            "confirmation": {
+                "type": "redirect",
+                "return_url": "https://web.telegram.org/a/#6261279510"
+            },
+            "capture": True,
+            "description": description
+        })
 
-    web = json.loads(payment.json())
-    id = web['id']
-    a.append(id)
-    site = web['confirmation']['confirmation_url']
-    a.append(site)
+        web = json.loads(payment.json())
+        id = web['id']
+        a.append(id)
+        site = web['confirmation']['confirmation_url']
+        a.append(site)
 
     return a
 
@@ -522,8 +546,8 @@ async def process_confirm_invalid(message: Message):
     await message.reply('Такого варианта не было.')
 
 
-Configuration.account_id = '226057'
-Configuration.secret_key = 'test_XBzEk_bjy4PkSe17lDz-Z3jdfT7S89q31pzPhhx27Rw'
+Configuration.account_id = '232734'
+Configuration.secret_key = 'live_kwIMi15B1_kulfz_Bu9HaD1vw72-5oN_mr9XijZzCPM'
 
 
 @dp.message_handler(text='✅ Подтвердить заказ', state=CheckoutState.confirm)
@@ -534,7 +558,7 @@ async def process_confirm(message: Message, state: FSMContext):
         for title, price, count_in_cart, info in data['products'].values():
             tp = count_in_cart * price
             total_price += tp
-        a = payment(total_price, '...')
+        a = await payment(total_price, '...', state)
         await message.answer(f"Ссылка на оплату:\n"
                              f"{a[1]}")
         cid = message.chat.id
