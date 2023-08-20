@@ -21,12 +21,21 @@ send_phone = ReplyKeyboardMarkup(resize_keyboard=True).add(b54)
 
 async def payment(value, description, state):
     a = []
+    items = []
     async with state.proxy() as data:
-        products = ''
-        count = ''
         for title, price, count_in_cart, info in data['products'].values():
-            products += f'{title}'
-            count += f'{count_in_cart}'
+            products = {
+                "description": title,
+                "amount": {
+                    "value": price,
+                    "currency": "RUB"
+                },
+                "vat_code": 1,
+                "quantity": count_in_cart,
+                "payment_subject": "service",
+                "payment_mode": "full_prepayment",
+            }
+            items.append(products)
         payment = Payment.create({
             "amount": {
                 "value": value,
@@ -37,17 +46,7 @@ async def payment(value, description, state):
                     "full_name": f"{data['name']}",
                     "phone": f"{data['phone_number']}",
                 },
-                "items": [{
-                    "description": products,
-                    "amount": {
-                        "value": price,
-                        "currency": "RUB"
-                    },
-                    "vat_code": 1,
-                    "quantity": count,
-                    "payment_subject": "service",
-                    "payment_mode": "full_prepayment",
-                }],
+                "items": items,
                 "tax_system_code": 3,
             },
             "payment_method_data": {
