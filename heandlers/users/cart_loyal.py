@@ -22,7 +22,7 @@ async def register_user(message: types.Message, state: FSMContext):
 async def register_user(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['name'] = message.text
-        await message.answer("Введите вашу фамилию")
+        await message.answer("Введите вашу фамилию", reply_markup=types.ReplyKeyboardRemove())
         await state.set_state(LoyalRegister.lastname)
 
 
@@ -42,7 +42,7 @@ async def register_phone_number(message: types.Message, state: FSMContext):
         data['phone_number'] = message.text
         db.query(f"INSERT INTO users (id, name, lastname, phone_number, balance) VALUES (?, ?, ?, ?, ?)",
                  (message.from_user.id, data['name'], data['lastname'], data['phone_number'], 0.0))
-        await message.answer("Принято")
+        await message.answer("Принято", reply_markup=main())
         await state.finish()
 
 

@@ -1,9 +1,8 @@
 from aiogram.dispatcher import FSMContext
-
 from buttons.admin.admin import admin
 from context.context import UpdateBalance
 from config import db, dp
-from buttons.admin.cart_loyal import loyal_markup_admin
+from buttons.admin.cart_loyal import loyal_markup_admin, back_menu
 from aiogram import types
 
 
@@ -30,7 +29,7 @@ async def admin_cart_users(message: types.Message):
 
 @dp.message_handler(text="Обновить баланс")
 async def update_balance(message: types.Message, state: FSMContext):
-    await message.answer("Введите телефон номер пользователя")
+    await message.answer("Введите телефон номер пользователя", reply_markup=types.ReplyKeyboardRemove())
     await state.set_state(UpdateBalance.phone)
 
 
@@ -38,7 +37,7 @@ async def update_balance(message: types.Message, state: FSMContext):
 async def set_number(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["phone"] = message.text
-        await message.answer("Введите счет")
+        await message.answer("Введите счет", reply_markup=back_menu())
         await state.set_state(UpdateBalance.money)
 
 
