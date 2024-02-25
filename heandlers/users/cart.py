@@ -300,15 +300,15 @@ class CheckoutState(StatesGroup):
 successful_payment = '''
 Ура! Платеж совершен успешно! Приятного аппетита!'''
 
-MESSAGE = {
-    'title': db.fetchone("""SELECT title FROM products WHERE idx IN (SELECT idx FROM cart)"""),
-    'description': db.fetchone("""SELECT body FROM products WHERE idx IN (SELECT idx FROM cart)"""),
-    'label': db.fetchone("""SELECT title FROM products"""),
-    'photo_url': db.fetchone("""SELECT photo FROM products WHERE idx IN(SELECT idx FROM cart)"""),
-    'successful_payments': successful_payment,
-    'count': db.fetchone("""SELECT quantity FROM cart"""),
-    'price': 'СЧЕТ НА ОПЛАТУ'
-}
+# MESSAGE = {
+#     'title': db.fetchone("""SELECT title FROM products WHERE idx IN (SELECT idx FROM cart)"""),
+#     'description': db.fetchone("""SELECT body FROM products WHERE idx IN (SELECT idx FROM cart)"""),
+#     'label': db.fetchone("""SELECT title FROM products"""),
+#     'photo_url': db.fetchone("""SELECT photo FROM products WHERE idx IN(SELECT idx FROM cart)"""),
+#     'successful_payments': successful_payment,
+#     'count': db.fetchone("""SELECT quantity FROM cart"""),
+#     'price': 'СЧЕТ НА ОПЛАТУ'
+# }
 
 
 @dp.message_handler(text="🗑 Очистить корзину")

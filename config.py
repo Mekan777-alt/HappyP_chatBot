@@ -3,17 +3,20 @@ import os
 from aiogram import Dispatcher, Bot, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from data.database import Database
+from dotenv import load_dotenv
+
+load_dotenv()
 
 loop = asyncio.get_event_loop()
-TOKEN = '6261279510:AAGW27LozQLygnhr2yzKrOXturXyr-r4Rcc'
-TOKEN_PAYMENTS = "test_XBzEk_bjy4PkSe17lDz-Z3jdfT7S89q31pzPhhx27Rw"
-DELIVERY_CHAT = "-1001973443055"
+TOKEN = os.getenv("TOKEN")
+TOKEN_PAYMENTS = os.getenv("TOKEN_PAYMENTS")
+DELIVERY_CHAT = os.getenv("DELIVERY_CHAT")
 SUPPORT_CHAT = ""
-BRON_CHANNEL = "-1001921643359"
+BRON_CHANNEL = os.getenv("BRON_CHANNEL")
 
 storage = MemoryStorage()
 
-path = os.getcwd() + "/data/database.db"
+path = os.getcwd() + "/database.sqlite"
 
 try:
     from local_config import *

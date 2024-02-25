@@ -4,3 +4,4 @@ from .reserved import dp
 from .dylevery import dp
 from .cart import dp
 from .sos import dp
+from .cart_loyal import dp

@@ -1,12 +1,16 @@
+import os
+
 from config import dp
 from aiogram import types
 from context.context import Admin
 from buttons.admin.admin import admin
 from aiogram.dispatcher import FSMContext
+from dotenv import load_dotenv
 
+load_dotenv()
 
-login = 'Happy'
-password = '12345'
+login = os.getenv('ADMIN_LOGIN')
+password = os.getenv('ADMIN_PASSWORD')
 
 
 @dp.message_handler(commands='admin', state=None)

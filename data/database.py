@@ -19,6 +19,7 @@ class Database(object):
         self.query('CREATE TABLE IF NOT EXISTS questions (cid int, question text)')
         self.query('CREATE TABLE IF NOT EXISTS regime (bron int, delivery int)')
         self.query('CREATE TABLE IF NOT EXISTS status (idx text, status text)')
+        self.query('CREATE TABLE IF NOT EXISTS users (id int, name text, lastname text, phone_number text, balance float)')
 
     def query(self, arg, values=None):
         if values is None:

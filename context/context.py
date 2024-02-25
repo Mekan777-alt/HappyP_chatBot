@@ -30,3 +30,14 @@ class ProductState(StatesGroup):
 
 class CategoryState(StatesGroup):
     title = State()
+
+
+class LoyalRegister(StatesGroup):
+    name = State()
+    lastname = State()
+    phone_number = State()
+
+
+class UpdateBalance(StatesGroup):
+    phone = State()
+    money = State()
