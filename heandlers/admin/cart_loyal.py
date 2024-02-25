@@ -15,14 +15,17 @@ async def admin_cart_loyal(message: types.Message):
 @dp.message_handler(text="Просмотреть пользователей")
 async def admin_cart_users(message: types.Message):
     users = db.fetchall("SELECT * FROM users")
-    text = ""
-    for user in users:
-        user = (f"ФИО: {user[2]} {user[1]}\n"
-                f"Телефон номер: {user[3]}\n"
-                f"Баланс: {user[4]} руб\n"
-                f"__________________________\n")
-        text += user
-    await message.answer(text, reply_markup=loyal_markup_admin())
+    if users:
+        text = ""
+        for user in users:
+            user = (f"ФИО: {user[2]} {user[1]}\n"
+                    f"Телефон номер: {user[3]}\n"
+                    f"Баланс: {user[4]} руб\n"
+                    f"__________________________\n")
+            text += user
+        await message.answer(text, reply_markup=loyal_markup_admin())
+    else:
+        await message.answer("Cписок пуст!", reply_markup=loyal_markup_admin())
 
 
 @dp.message_handler(text="Обновить баланс")
