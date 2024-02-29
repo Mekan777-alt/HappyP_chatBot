@@ -35,9 +35,10 @@ class CategoryState(StatesGroup):
 class LoyalRegister(StatesGroup):
     name = State()
     lastname = State()
+    birthday = State()
     phone_number = State()
 
 
 class UpdateBalance(StatesGroup):
-    phone = State()
+    code = State()
     money = State()

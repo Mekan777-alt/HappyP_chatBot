@@ -14,29 +14,31 @@ async def admin_cart_loyal(message: types.Message):
 @dp.message_handler(text="Просмотреть пользователей")
 async def admin_cart_users(message: types.Message):
     users = db.fetchall("SELECT * FROM users")
+    print(users)
     if users:
         text = ""
         for user in users:
-            user = (f"ФИО: {user[2]} {user[1]}\n"
-                    f"Телефон номер: {user[3]}\n"
-                    f"Баланс: {user[4]} руб\n"
+            user = (f"<b>ФИО: {user[2]} {user[1]}</b>\n"
+                    f"<b>Телефон номер: {user[3]}</b>\n"
+                    f"<b>Баланс: {user[6]} руб</b>\n"
+                    f"<b>Код пополнения: {user[5]}</b>\n"
                     f"__________________________\n")
             text += user
-        await message.answer(text, reply_markup=loyal_markup_admin())
+        await message.answer(text, reply_markup=loyal_markup_admin(), parse_mode="HTML")
     else:
         await message.answer("Cписок пуст!", reply_markup=loyal_markup_admin())
 
 
 @dp.message_handler(text="Обновить баланс")
 async def update_balance(message: types.Message, state: FSMContext):
-    await message.answer("Введите телефон номер пользователя", reply_markup=types.ReplyKeyboardRemove())
-    await state.set_state(UpdateBalance.phone)
+    await message.answer("Введите код пользователя", reply_markup=types.ReplyKeyboardRemove())
+    await state.set_state(UpdateBalance.code)
 
 
-@dp.message_handler(state=UpdateBalance.phone)
+@dp.message_handler(state=UpdateBalance.code)
 async def set_number(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data["phone"] = message.text
+        data["code"] = message.text
         await message.answer("Введите счет", reply_markup=back_menu())
         await state.set_state(UpdateBalance.money)
 
@@ -46,7 +48,7 @@ async def set_money(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["money"] = message.text
         balance_user = int(data["money"])
-        phone_number = data["phone"]
-        db.query("UPDATE users SET balance = balance + ? WHERE phone_number = ?", (balance_user, phone_number))
+        code = data["code"]
+        db.query("UPDATE users SET balance = balance + ? WHERE entry_number = ?", (balance_user, code))
         await message.answer("Принято!", reply_markup=admin())
         await state.finish()
