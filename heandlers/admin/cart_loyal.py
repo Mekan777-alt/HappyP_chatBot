@@ -19,7 +19,7 @@ async def admin_cart_users(message: types.Message):
         text = ""
         for user in users:
             user = (f"<b>ФИО: {user[2]} {user[1]}</b>\n"
-                    f"<b>Телефон номер: {user[3]}</b>\n"
+                    f"<b>Телефон номер: {user[4]}</b>\n"
                     f"<b>Баланс: {user[6]} руб</b>\n"
                     f"<b>Код пополнения: {user[5]}</b>\n"
                     f"__________________________\n")

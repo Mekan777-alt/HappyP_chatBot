@@ -13,7 +13,7 @@ loop = asyncio.get_event_loop()
 TOKEN = os.getenv("TOKEN")
 TOKEN_PAYMENTS = os.getenv("TOKEN_PAYMENTS")
 DELIVERY_CHAT = os.getenv("DELIVERY_CHAT")
-SUPPORT_CHAT = ""
+SUPPORT_CHAT = os.getenv("SOS_CHAT")
 BRON_CHANNEL = os.getenv("BRON_CHANNEL")
 
 storage = MemoryStorage()

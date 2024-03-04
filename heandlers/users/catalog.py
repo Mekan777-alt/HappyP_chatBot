@@ -1,7 +1,10 @@
-from config import dp
+import asyncio
+
+from config import dp, bot
 from aiogram import types
-from buttons.users.menu import menu
+from buttons.users.menu import menu, bar_menu
 from buttons.users.main import main
+from aiogram.types import ChatActions
 
 
 @dp.message_handler(text='📖 Меню')
@@ -9,33 +12,75 @@ async def catalog_menu(message: types.Message):
     await message.answer('Что вас интересует?', reply_markup=menu())
 
 
-@dp.message_handler(text='🍳 Завтраки')
+@dp.message_handler(text='🍣 Авторские роллы от Шефа Суши')
 async def dinner(message: types.Message):
-    await message.answer('По ссылке ниже можете ознакомиться с Завтраками\n'
-                         '\n'
-                         'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10086110')
+    photo = open('../../photoMenu/msg577119024-236488.jpg', 'rb')
+    photo1 = open('../../photoMenu/msg577119024-236487.jpg', 'rb')
+    photo2 = open('../../photoMenu/msg577119024-236498.jpg', 'rb')
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user, photo1)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo2)
 
 
-@dp.message_handler(text='🥪 Бизнес ланч')
+@dp.message_handler(text='🥗 Холодные закуски')
 async def biznes(message: types.Message):
-    await message.answer('По ссылке ниже можете ознакомиться с Бизнес-ланчами\n'
-                         '\n'
-                         'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10089026')
+    photo = open('../../photoMenu/msg577119024-236495.jpg', 'rb')
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo)
 
 
-@dp.message_handler(text='📓 Основное меню')
+@dp.message_handler(text='🥘 Основное меню')
 async def main_menu(message: types.Message):
-    await message.answer('По ссылке ниже можете ознакомиться с Основным меню\n'
-                         '\n'
-                         'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10085742')
+    photo = open('../../photoMenu/msg577119024-236485.jpg', 'rb')
+    photo1 = open('../../photoMenu/msg577119024-236490.jpg', 'rb')
+    photo2 = open('../../photoMenu/msg577119024-236494.jpg', 'rb')
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user, photo1)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo2)
 
+
+
+@dp.message_handler(text='🍕 Выпечка/Пицца')
+async def pizza_menu(message: types.Message):
+    photo = open('../../photoMenu/msg577119024-236486.jpg', 'rb')
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo)
 
 @dp.message_handler(text='🍾 Бар')
 async def catalog_bar(message: types.Message):
-    await message.answer('С Баром можете ознакомиться по ссылке ниже\n'
-                         '\n'
-                         'https://qr.vsem-edu-oblako.ru/?merchantKey=6a3bcb79dff2b98025e610d7a01bdf7e#/catalog/10085743'
-                         )
+    await message.answer("Выберите позицию", reply_markup=bar_menu())
+
+
+@dp.message_handler(text="🍸 Алкогольные напитки")
+async def catalog_baz(message: types.Message):
+    photo1 = open("../../photoMenu/msg577119024-236499.jpg", 'rb')
+    photo2 = open("../../photoMenu/msg577119024-236496.jpg", 'rb')
+    photo3 = open("../../photoMenu/msg577119024-236497.jpg", 'rb')
+    photo4 = open("../../photoMenu/msg577119024-236489.jpg", 'rb')
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo1)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo2)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo3)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo4)
+
+
+@dp.message_handler(text="☕ Безалкогольные напитки")
+async def bez_menu(message: types.Message):
+    photo1 = open("../../photoMenu/msg577119024-236492.jpg", "rb")
+    photo2 = open("../../photoMenu/msg577119024-236493.jpg", "rb")
+    await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
+    await bot.send_photo(message.from_user.id, photo1)
+    await asyncio.sleep(1)
+    await bot.send_photo(message.from_user.id, photo2)
 
 
 @dp.message_handler(text='👈 Назад')
