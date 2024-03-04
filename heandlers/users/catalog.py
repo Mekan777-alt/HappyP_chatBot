@@ -1,5 +1,6 @@
 import asyncio
 
+
 from config import dp, bot
 from aiogram import types
 from buttons.users.menu import menu, bar_menu
@@ -14,9 +15,9 @@ async def catalog_menu(message: types.Message):
 
 @dp.message_handler(text='🍣 Авторские роллы от Шефа Суши')
 async def dinner(message: types.Message):
-    photo = open('../../photoMenu/msg577119024-236488.jpg', 'rb')
-    photo1 = open('../../photoMenu/msg577119024-236487.jpg', 'rb')
-    photo2 = open('../../photoMenu/msg577119024-236498.jpg', 'rb')
+    photo = open('/root/HappyP_chatBot/photoMenu/msg577119024-236488.jpg', 'rb')
+    photo1 = open('/root/HappyP_chatBot/photoMenu/msg577119024-236487.jpg', 'rb')
+    photo2 = open('/root/HappyP_chatBot/photoMenu/msg577119024-236498.jpg', 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo)
     await asyncio.sleep(1)
@@ -27,16 +28,16 @@ async def dinner(message: types.Message):
 
 @dp.message_handler(text='🥗 Холодные закуски')
 async def biznes(message: types.Message):
-    photo = open('../../photoMenu/msg577119024-236495.jpg', 'rb')
+    photo = open('/root/HappyP_chatBot/photoMenu/msg577119024-236495.jpg', 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo)
 
 
 @dp.message_handler(text='🥘 Основное меню')
 async def main_menu(message: types.Message):
-    photo = open('../../photoMenu/msg577119024-236485.jpg', 'rb')
-    photo1 = open('../../photoMenu/msg577119024-236490.jpg', 'rb')
-    photo2 = open('../../photoMenu/msg577119024-236494.jpg', 'rb')
+    photo = open('/root/HappyP_chatBot/photoMenu/msg577119024-236485.jpg', 'rb')
+    photo1 = open('/root/HappyP_chatBot/photoMenu/msg577119024-236490.jpg', 'rb')
+    photo2 = open('/root/HappyP_chatBot/photoMenu/msg577119024-236494.jpg', 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo)
     await asyncio.sleep(1)
@@ -48,7 +49,7 @@ async def main_menu(message: types.Message):
 
 @dp.message_handler(text='🍕 Выпечка/Пицца')
 async def pizza_menu(message: types.Message):
-    photo = open('../../photoMenu/msg577119024-236486.jpg', 'rb')
+    photo = open('/root/HappyP_chatBot/photoMenu/msg577119024-236486.jpg', 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo)
 
@@ -59,10 +60,10 @@ async def catalog_bar(message: types.Message):
 
 @dp.message_handler(text="🍸 Алкогольные напитки")
 async def catalog_baz(message: types.Message):
-    photo1 = open("../../photoMenu/msg577119024-236499.jpg", 'rb')
-    photo2 = open("../../photoMenu/msg577119024-236496.jpg", 'rb')
-    photo3 = open("../../photoMenu/msg577119024-236497.jpg", 'rb')
-    photo4 = open("../../photoMenu/msg577119024-236489.jpg", 'rb')
+    photo1 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236499.jpg", 'rb')
+    photo2 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236496.jpg", 'rb')
+    photo3 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236497.jpg", 'rb')
+    photo4 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236489.jpg", 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo1)
     await asyncio.sleep(1)
@@ -75,8 +76,8 @@ async def catalog_baz(message: types.Message):
 
 @dp.message_handler(text="☕ Безалкогольные напитки")
 async def bez_menu(message: types.Message):
-    photo1 = open("../../photoMenu/msg577119024-236492.jpg", "rb")
-    photo2 = open("../../photoMenu/msg577119024-236493.jpg", "rb")
+    photo1 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236492.jpg", "rb")
+    photo2 = open("/root/HappyP_chatBot/photoMenu/msg577119024-236493.jpg", "rb")
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo1)
     await asyncio.sleep(1)
