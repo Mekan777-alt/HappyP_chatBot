@@ -23,7 +23,7 @@ async def send_message():
     current_date = datetime.utcnow().date()
     users = db.fetchall("SELECT * FROM users")
     for user in users:
-        date_of_birth = datetime.utcfromtimestamp(user[3] / 1000).date()
+        date_of_birth = datetime.utcfromtimestamp(int(user[3]) / 1000).date()
         if date_of_birth.month == current_date.month and date_of_birth.day == current_date.day:
             await bot.send_message(int(user[0]), text="Дорогой наш гость,\n\n"
                                                       "Поздравляем вас с днём рождения! 🎉 От всей души желаем вам "
