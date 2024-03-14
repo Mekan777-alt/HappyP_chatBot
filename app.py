@@ -39,7 +39,7 @@ async def send_message():
                                                           "нашим гостеприимством и в течение следующих трёх дней.\n\n"
                                                           "С наилучшими пожеланиями и горячими поздравлениями,\n\n"
                                                           "Happy People!")
-                await bot.send_message(chat_id=5443287345, text=f"У данного пользователя {user[1]} {user[2]} сегодня др\n"
+                await bot.send_message(chat_id=577119024, text=f"У данного пользователя {user[1]} {user[2]} сегодня др\n"
                                                                 f"Номер телефона: {user[4]}")
             else:
                 pass
