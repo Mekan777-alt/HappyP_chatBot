@@ -44,7 +44,7 @@ async def virt_cart(message: types.Message):
 @dp.message_handler(text="👛Баланс")
 async def sum_money_user(message: types.Message):
     balance = db.fetchone("SELECT balance FROM users WHERE id = ?", (message.from_user.id,))
-    await message.answer(f"Баланс вашего счета состовляет <b>{balance[0]} руб</b>", parse_mode="HTML")
+    await message.answer(f"Баланс вашего счета составляет <b>{balance[0]} руб</b>", parse_mode="HTML")
 
 
 @dp.message_handler(text="👤 Зарегистрироваться")
