@@ -49,7 +49,7 @@ async def main_menu(message: types.Message):
 
 @dp.message_handler(text='🍕 Пицца/Хачапури/Десерты')
 async def pizza_menu(message: types.Message):
-    photo = open('/root/HappyP_chatBot/photoMenu/msg577119024-236486.jpg', 'rb')
+    photo = open('/root/HappyP_chatBot/photoMenu/photo_2024-03-28_18-49-07.jpg', 'rb')
     await bot.send_chat_action(message.from_user.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(message.from_user.id, photo)
 
